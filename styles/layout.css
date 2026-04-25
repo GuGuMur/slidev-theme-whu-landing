@@ -22,3 +22,81 @@
     @apply mt-10;
   }
 }
+
+.slidev-layout.content {
+  @apply h-full;
+}
+
+.content-layout {
+  @apply h-full w-full flex flex-col overflow-hidden px-10 py-8;
+}
+
+.content-top {
+  @apply flex gap-6 mb-8;
+}
+
+.content-box {
+  @apply flex-1 rounded-[24px] border-2 border-solid p-5 shadow-sm;
+}
+
+.content-box.left {
+  border-color: #3b99d4;
+  background: rgba(59, 153, 212, 0.12);
+  color: #0f3c66;
+}
+
+.content-box.right {
+  border-color: #d18b40;
+  background: rgba(209, 139, 64, 0.12);
+  color: #844b1c;
+}
+
+.box-title {
+  @apply text-xs uppercase tracking-[0.24em] font-semibold opacity-80 mb-3;
+}
+
+.box-body {
+  @apply text-base leading-7;
+}
+
+.content-grid {
+  @apply grid gap-6 flex-1;
+  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.95fr);
+}
+
+.content-column,
+.side-column {
+  @apply flex flex-col gap-6;
+}
+
+.content-card {
+  @apply rounded-[24px] border border-slate-200/70 bg-slate-50/90 p-5 shadow-sm;
+}
+
+.card-heading {
+  @apply text-xl font-semibold mb-3;
+}
+
+.references-box {
+  @apply rounded-[24px] border border-slate-200/70 bg-slate-950/95 p-5 shadow-lg text-white;
+}
+
+.reference-title {
+  @apply text-xs uppercase tracking-[0.24em] font-semibold opacity-80 mb-4;
+}
+
+.refs-list {
+  @apply flex flex-col gap-3;
+}
+
+.ref-item {
+  @apply flex gap-3 text-sm leading-6 text-slate-100;
+}
+
+.ref-index {
+  @apply w-6 text-right text-slate-400;
+}
+
+.ref-empty {
+  @apply text-sm opacity-70;
+}

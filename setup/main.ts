@@ -1,6 +1,8 @@
 import { defineAppSetup } from "@slidev/types";
+import referencesPlugin from "../plugins/references/index";
+// import naive from "slidev-addon-naive";
 
-export default defineAppSetup(({ app, router }) => {
-    // Vue App
-    // app.use(YourPlugin);
+export default defineAppSetup(({ app }) => {
+  app.use(referencesPlugin);
+  // app.use(naive);
 });

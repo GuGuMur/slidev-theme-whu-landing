@@ -1,10 +1,9 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
+    base: "./",
+    publicDir: "public",
     slidev: {
-        vue: {
-            /* vue 选项 */
-        },
         markdown: {
             /* markdown-it 选项 */
             markdownItSetup(md) {
@@ -13,5 +12,8 @@ export default defineConfig({
             },
         },
         /* 其他插件的选项 */
+    },
+    optimizeDeps: {
+        include: ["debug", "slidev-addon-naive > debug"],
     },
 });

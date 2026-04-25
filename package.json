@@ -10,16 +10,20 @@
     "node": ">=20.12.0"
   },
   "scripts": {
-    "build": "slidev build example.md",
-    "dev": "slidev example.md --open",
-    "export": "slidev export example.md",
-    "screenshot": "slidev export example.md --format png"
+    "build": "slidev build slides/main.md",
+    "dev": "slidev slides/main.md --open",
+    "export": "slidev export slides/main.md",
+    "screenshot": "slidev export slides/main.md --format png"
   },
   "dependencies": {
     "@citation-js/core": "^0.7.21",
+    "@citation-js/plugin-bibtex": "^0.7.21",
+    "@citation-js/plugin-csl": "^0.7.22",
     "@citation-js/plugin-doi": "^0.7.21",
     "@slidev/types": "^52.14.2",
     "@viarotel-org/unocss-preset-shades": "^0.8.2",
+    "naive-ui": "^2.44.1",
+    "pinia": "^3.0.4",
     "slidev-addon-naive": "^0.9.0",
     "slidev-addon-stem": "^0.1.3",
     "slidev-addon-typst": "^1.0.2",
@@ -38,6 +42,9 @@
         "sans": "Source Han Sans",
         "mono": "JetBrains Mono"
       }
-    }
+    },
+    "addons": [
+      "naive"
+    ]
   }
 }
