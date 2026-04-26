@@ -35,7 +35,7 @@ const props = defineProps({
                 <div class="flex-1 min-h-0 grid grid-cols-12 gap-6 items-stretch">
 
                     <div class="col-span-4 h-full flex flex-col min-h-0">
-                        <ColBlock>
+                        <ColBlock class="h-full">
                             <template #title>
                                 <MyCite :doi="props.paperDOI" :label="paperABBR">
                                     {{ paperABBR }}
@@ -47,7 +47,7 @@ const props = defineProps({
                         </ColBlock>
                     </div>
 
-                    <div class="col-span-8 h-full flex flex-col overflow-auto min-h-0">
+                    <div class="col-span-8 h-full flex flex-col overflow-hidden min-h-0">
                         <slot name="details" />
                     </div>
 

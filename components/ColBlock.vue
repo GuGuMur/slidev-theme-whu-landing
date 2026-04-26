@@ -13,7 +13,7 @@ const props = withDefaults(defineProps<{
 </script>
 
 <template>
-    <div class="flex flex-col flex-1 h-full min-h-0 rounded-lg shadow-md overflow-hidden border border-gray-200/50">
+    <div class="flex flex-col min-h-0 rounded-lg shadow-md overflow-hidden border border-gray-200/50">
         <div :class="props.titleBGColor" class="px-4 pb-1 text-white font-bold text-lg flex-center gap-2 shrink-0">
             <slot name="title-prefix" />
             <span :class="props.titleTextColor">
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
             </span>
         </div>
 
-        <div :class="props.contentColor" class="px-4 py-2 flex-grow flex overflow-y-auto flex-col  justify-start text-sm ">
+        <div :class="props.contentColor" class="px-4 py-2 flex flex-col justify-start text-sm">
             <slot />
         </div>
     </div>

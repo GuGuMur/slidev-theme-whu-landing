@@ -44,3 +44,31 @@ ol > li::before {
   
   /* 这里的 decimal-leading-zero 会生成 01, 02 这种极具学术排版感的格式 */
 }
+
+/* Paper summary details tabs: fill the column and scale images without scrollbars */
+.paper-summary-tabs {
+  @apply h-full min-h-0 flex flex-col;
+}
+
+.paper-summary-tabs .n-tabs-nav {
+  flex-shrink: 0;
+}
+
+.paper-summary-tabs .n-tab-pane-wrapper,
+.paper-summary-tabs .n-tabs-content,
+.paper-summary-tabs .n-tab-pane {
+  height: 100%;
+  min-height: 0;
+}
+
+.paper-summary-pane {
+  @apply h-full;
+}
+
+.paper-summary-pane-inner {
+  @apply h-full w-full flex items-center justify-center overflow-hidden;
+}
+
+.paper-summary-pane-image {
+  @apply max-h-full max-w-full object-contain;
+}

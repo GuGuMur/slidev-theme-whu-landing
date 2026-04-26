@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { computed, useAttrs } from 'vue'
+
 interface Props {
     title?: string
     icon?: string // 接收 UnoCSS 图标类名，如 i-carbon-light
@@ -11,7 +13,13 @@ const props = withDefaults(defineProps<Props>(), {
     size: 'md'
 })
 
-const alignMap = {
+const containerAlignMap = {
+    left: 'justify-start',
+    center: 'justify-center',
+    right: 'justify-end'
+}
+
+const contentAlignMap = {
     left: 'justify-start text-left',
     center: 'justify-center text-center',
     right: 'justify-end text-right'
@@ -21,13 +29,31 @@ const sizeMap = {
     md: 'text-base',
     lg: 'text-lg'
 }
+
+const attrs = useAttrs()
+
+function classToString(value: unknown): string {
+    if (typeof value === 'string') return value
+    if (Array.isArray(value)) return value.map(classToString).join(' ')
+    if (value && typeof value === 'object') {
+        return Object.entries(value as Record<string, unknown>)
+            .filter(([, enabled]) => !!enabled)
+            .map(([name]) => name)
+            .join(' ')
+    }
+    return ''
+}
+
+const mergedClass = computed(() => classToString(attrs.class))
+const fillWidth = computed(() => /(^|\s)w-full(\s|$)/.test(mergedClass.value))
+const fillHeight = computed(() => /(^|\s)h-full(\s|$)/.test(mergedClass.value))
 </script>
 
 <template>
-    <div class="w-full flex mb-2">
+    <div class="flex mb-2" :class="containerAlignMap[props.align]">
         <div
-            class="w-full flex items-center gap-2 bg-gray-100/50 px-3 py-1.5 rounded-xl border border-whu-sky shadow-md backdrop-blur-sm"
-            :class="alignMap[props.align]">
+            class="flex items-center gap-2 bg-gray-100/50 px-3 py-1.5 rounded-xl border border-whu-sky shadow-md backdrop-blur-sm"
+            :class="[contentAlignMap[props.align], fillWidth ? 'w-full' : 'inline-flex', fillHeight ? 'h-full' : '']">
             <div v-if="props.icon" :class="props.icon" class="text-primary shrink-0" />
 
             <div class="flex items-center gap-2 leading-4" :class="sizeMap[props.size]">
