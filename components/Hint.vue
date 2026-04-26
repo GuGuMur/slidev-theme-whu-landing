@@ -3,10 +3,12 @@ interface Props {
     title?: string
     icon?: string // 接收 UnoCSS 图标类名，如 i-carbon-light
     align?: 'left' | 'center' | 'right'
+    size?: 'sm' | 'md' | 'lg'
 }
 
 const props = withDefaults(defineProps<Props>(), {
-    align: 'center'
+    align: 'center',
+    size: 'md'
 })
 
 const alignMap = {
@@ -14,15 +16,21 @@ const alignMap = {
     center: 'justify-center text-center',
     right: 'justify-end text-right'
 }
+const sizeMap = {
+    sm: 'text-sm',
+    md: 'text-base',
+    lg: 'text-lg'
+}
 </script>
 
 <template>
-    <div class="w-full flex mt-2 mb-1" :class="alignMap[props.align]">
+    <div class="w-full flex mb-2">
         <div
-            class="inline-flex items-center gap-2 bg-gray-100/50 px-3 py-1.5 rounded-xl border border-gray-200/50 shadow-sm backdrop-blur-sm">
-            <div v-if="props.icon" :class="props.icon" class="text-primary text-sm shrink-0" />
+            class="w-full flex items-center gap-2 bg-gray-100/50 px-3 py-1.5 rounded-xl border border-whu-sky shadow-md backdrop-blur-sm"
+            :class="alignMap[props.align]">
+            <div v-if="props.icon" :class="props.icon" class="text-primary shrink-0" />
 
-            <div class="flex items-center gap-2 text-xs leading-none">
+            <div class="flex items-center gap-2 leading-4" :class="sizeMap[props.size]">
                 <span v-if="props.title" class="font-bold text-primary whitespace-nowrap">
                     {{ props.title }}
                 </span>

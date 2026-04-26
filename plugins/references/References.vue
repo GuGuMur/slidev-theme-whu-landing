@@ -8,87 +8,95 @@ import '@citation-js/plugin-bibtex'
 import '@citation-js/plugin-csl'
 import { type SlideCitation, useCitationStore } from './store'
 
+interface CiteDetail {
+  doi: string
+  text: string
+  link: string
+}
+
 const { $page } = useSlideContext()
-const citationStore = useCitationStore()
+const store = useCitationStore()
 
-const citations = computed(() => citationStore.getSlideCitations($page.value))
-const sortedCitations = computed(() => [...citations.value].sort((a, b) => a.number - b.number))
-const renderedByNumber = ref<Record<number, string>>({})
+const cites = computed(() => store.getSlideCitations($page.value))
+const sorted_links = computed(() => [...cites.value].sort((a, b) => a.number - b.number))
+const refs = ref<Record<number, CiteDetail>>({})
 
-const templates = ['mla', 'apa']
+const TEMPLATES = ['mla', 'apa']
 
-function normalizeOutput(text: string): string {
+/**
+ * 规范化文本，移除多余空格
+ */
+function str_trim(text: string): string {
   return text.replace(/\s+/g, ' ').trim()
 }
 
 /**
- * 格式化 DOI 为 GB/T 7714 标准
+ * 清洗并补全 DOI
  */
-async function formatDoi(doi: string | undefined, url: string | undefined): Promise<string> {
-    if (!doi) return url || ' ';
-
-    // 1. 预处理 DOI (确保格式正确)
-    let cleanDoi = doi.trim();
-    if (/^\d{4}\.\d{4,5}$/.test(cleanDoi)) {
-        cleanDoi = `10.48550/arXiv.${cleanDoi}` // 转换为 DOI 格式
-    }
-    for (const template of templates) {
-        try {
-            const cite = await Cite.async(cleanDoi);
-
-            // 2. 渲染文献
-            const rendered = cite.format('bibliography', {
-                format: 'text',
-                template: template,
-                lang: 'en-US', // 强制使用中文语言包，这会处理 "et al." 和 "等"
-                prepend: (entry: any) => {
-                    // 如果不需要原本库带的 [1] 编号，可以在这里处理
-                    return '';
-                }
-            });
-
-            let normalized = normalizeOutput(rendered);
-
-            // 3. 针对性修护 (Fix: 部分 CSL 模板可能不会自动补全 [J])
-            // 如果结果里没有 [J]、[M] 等标识且它是期刊，可以手动补充逻辑，
-            // 但通常 gb-7714-2015 模板会自动处理这些。
-
-            // 移除可能存在的开头数字编号，例如 "1. " 或 "[1] "
-            normalized = normalized.replace(/^\[?\d+\]?\s*/, '');
-
-            if (normalized) {
-                return normalized;
-            }
-        } catch (e) {
-            console.warn(`Template ${template} failed for DOI: ${cleanDoi}`, e);
-        }
-    }
-
-    // 兜底返回
-    return doi || url || ' ';
+function doi_clean(doi: string): string {
+  const raw = doi.trim()
+  if (/^\d{4}\.\d{4,5}$/.test(raw)) {
+    return `10.48550/arXiv.${raw}`
+  }
+  return raw
 }
+
+/**
+ * 核心格式化逻辑：尝试不同模板解析 DOI
+ */
+async function doi_format(doi: string): Promise<string> {
+  const target = doi_clean(doi)
+
+  for (const tpl of TEMPLATES) {
+    try {
+      const cite = await Cite.async(target)
+      const out = cite.format('bibliography', {
+        format: 'text',
+        template: tpl,
+        lang: 'en-US',
+      })
+
+      const res = str_trim(out).replace(/^\[?\d+\]?\s*/, '')
+      if (res) return res
+    } catch (e) {
+      console.warn(`[Cite] Template ${tpl} failed for: ${target}`)
+    }
+  }
+  return doi
+}
+
+/**
+ * 解析引用项，生成元数据字典
+ */
+async function resolve_cite(item: SlideCitation): Promise<[number, CiteDetail]> {
+  const cleaned = item.doi ? doi_clean(item.doi) : ''
+  const formatted = item.doi ? await doi_format(item.doi) : (item.url || ' ')
+
+  return [
+    item.number,
+    {
+      doi: cleaned,
+      text: formatted,
+      link: item.doi ? `https://doi.org/${cleaned}` : (item.url || '#'),
+    }
+  ]
+}
+
 watch(
-  citations,
-  async (items: SlideCitation[], _, onCleanup) => {
+  cites,
+  async (items, _, onCleanup) => {
     let cancelled = false
-    onCleanup(() => {
-      cancelled = true
-    })
+    onCleanup(() => (cancelled = true))
 
     if (!items.length) {
-      renderedByNumber.value = {}
+      refs.value = {}
       return
     }
 
-    const entries = await Promise.all(
-      items.map(async (item) => {
-        const rendered = await formatDoi(item.doi, item.url)
-        return [item.number, rendered] as const
-      })
-    )
+    const entries = await Promise.all(items.map(resolve_cite))
 
     if (!cancelled) {
-      renderedByNumber.value = Object.fromEntries(entries)
+      refs.value = Object.fromEntries(entries)
     }
   },
   { immediate: true, deep: true }
@@ -96,16 +104,18 @@ watch(
 </script>
 
 <template>
-  <div v-if="sortedCitations.length > 0" class="border-t border-gray-100 pt-1">
-    <div v-for="item in sortedCitations" :key="item.number"
-      class="flex flex-items-start gap-0 text-[7px] leading-[1.2] text-gray-700 mb-0">
-      <span class="font-mono inline-block w-[2.5em]">[{{ item.number }}]</span>
-      <span class="inline-block break-words flex-1" style="width: calc(100% - 2.5em)">
-        {{ renderedByNumber[item.number] || item.doi || item.url || " " }} {{ item.suffix || "" }}
-      </span>
+  <div v-if="sorted_links.length > 0" class="border-t border-gray-100 pt-1">
+    <div v-for="c in sorted_links" :key="c.number"
+      class="flex flex-items-start gap-0 text-[7px] leading-[1.2]  mb-0.5 hover:text-gray-700 transition-colors">
+
+      <a :href="refs[c.number]?.link" target="_blank" class="flex flex-1 no-underline color-inherit decoration-none">
+        <span class="font-mono inline-block w-[2.5em] shrink-0">[{{ c.number }}]</span>
+        <span class="inline-block break-words flex-1">
+          {{ refs[c.number]?.text || c.doi || c.url }}
+          <span v-if="c.suffix" class="opacity-80">{{ c.suffix }}</span>
+        </span>
+      </a>
+
     </div>
   </div>
 </template>
-
-<style scoped>
-</style>

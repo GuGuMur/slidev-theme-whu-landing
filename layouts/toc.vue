@@ -50,7 +50,7 @@ const tocData = computed(() => props.tocTree ?? globalToc.value)
                             <ul v-if="item.children && item.children.length"
                                 class="flex flex-col gap-1 mt-2 border-l-2 border-[#3b99d4]/30 pl-4">
                                 <li v-for="child in item.children" :key="child.path"
-                                    class="text-lg font-medium opacity-80 hover:opacity-100 transition-opacity">
+                                    class="text-sm font-medium opacity-80 hover:opacity-100 transition-opacity">
                                     {{ child.title }}
                                 </li>
                             </ul>
@@ -62,3 +62,6 @@ const tocData = computed(() => props.tocTree ?? globalToc.value)
         </template>
     </BaseLayout>
 </template>
+
+<style scoped>
+</style>

@@ -27,7 +27,7 @@ export const useCitationStore = defineStore('slidev-citations', () => {
   }
 
   function addCitation(slide: number, doi: string, displayName: string): number {
-    if (!doi || !doi.trim()) {
+    if (!doi || !doi?.trim()) {
       return 0
     }
 

@@ -52,7 +52,7 @@ watch(
     </span>
 
     <sup v-if="citationNumber > 0" class="text-current text-[0.72em] ml-[0.04em] ml-0.5 text-primary ">
-      [{{ citationNumber }}]
+        [{{ citationNumber }}]
     </sup>
   </span>
 </template>

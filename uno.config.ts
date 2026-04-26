@@ -18,17 +18,24 @@ export default defineConfig({
       },
     }),
   ],
-  shortcuts: {
-    // 自定义默认背景
-    "bg-primary": "bg-[#3b99d4]",
-    "page-number":
-      "italic font-bold text-base font-[Times_New_Roman,serif] [font-variant-numeric:lining-nums] tracking-wide",
-    "flex-center": "flex items-center justify-center",
-  },
+  shortcuts: [
+    {
+      // 自定义默认背景
+      "bg-primary": "bg-[#3b99d4]",
+      "page-number":
+        "italic font-bold text-base font-[Times_New_Roman,serif] [font-variant-numeric:lining-nums] tracking-wide",
+      "flex-center": "flex items-center justify-center",
+    },
+    [
+      /^d-mark-(.*)$/,
+      ([, c]) =>
+        `relative z-1 inline font-bold bg-gradient-to-b from-transparent from-35% via-${c} via-35% via-${c} via-80% to-transparent to-80%`,
+    ],
+  ],
   theme: {
     colors: {
       // 核心校色
-      primary: "#002554", // 珞珈蓝
+      primary: "#3b99d4", // 珞珈蓝
       secondary: "#115740", // 珞珈绿
 
       // 扩展学术色谱

@@ -10,7 +10,9 @@
             "./node_modules/@types",
             "./src/types"
         ],
-        "allowImportingTsExtensions": true
+        "allowImportingTsExtensions": true,
+        "jsx": "preserve",
+        "jsxImportSource": "vue"
     },
     "include": [
         "plugins/**/*.ts",

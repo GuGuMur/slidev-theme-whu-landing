@@ -5,7 +5,8 @@ ul {
 
 ul > li {
   /* 使用 grid 或 flex 确保内容垂直居中，min-h 确保容器至少有图标那么大 */
-  @apply relative pl-5 flex items-start min-h-5; 
+  @apply relative pl-5 min-h-4 text-justify;
+  isolation: isolate;
 }
 
 /* 蓝色圆圈底色 */
