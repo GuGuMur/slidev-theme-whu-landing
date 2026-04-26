@@ -4,6 +4,7 @@ import { defineStore } from 'pinia'
 export interface SlideCitation {
   doi?: string
   url?: string
+  suffix?: string
   displayName: string
   number: number
 }
@@ -44,6 +45,8 @@ export const useCitationStore = defineStore('slidev-citations', () => {
     const number = citationsBySlide.value[slide].length + 1
     citationsBySlide.value[slide].push({
       doi,
+      url: undefined,
+      suffix: undefined,
       displayName,
       number,
     })

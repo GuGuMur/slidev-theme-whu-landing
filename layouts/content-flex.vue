@@ -4,8 +4,8 @@ import References from '../plugins/references/References.vue'
 
 
 const props = defineProps({
+    chapter: { type: String, default: '' },
     section: { type: String, default: '' },
-    title: { type: String, default: '' },
 })
 
 </script>
@@ -14,11 +14,11 @@ const props = defineProps({
     <BaseLayout>
         <template #header>
             <div class="flex items-stretch h-full w-full border-primary">
-                <div class="bg-primary text-white flex items-center px-8 font-bold text-xl min-w-[150px]">
-                    {{ section }}
+                <div class="bg-primary text-white flex items-center justify-center px-8 font-bold text-xl min-w-[150px]">
+                    {{ chapter }}
                 </div>
-                <div v-if="title" class="flex-grow flex items-center px-6 text-black font-bold text-xl">
-                    {{ title }}
+                <div class="flex-grow flex items-center px-6 text-black font-bold text-xl">
+                    {{ section }}
                 </div>
             </div>
         </template>
@@ -31,7 +31,7 @@ const props = defineProps({
 
         <template #footer>
             <div class="flex flex-col w-full">
-                <div class="px-8 py-1">
+                <div class="px-2 py-1">
                     <References />
                 </div>
             </div>

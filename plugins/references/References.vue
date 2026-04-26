@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { useSlideContext } from '@slidev/client'
+// @ts-ignore
 import { Cite } from '@citation-js/core'
 import '@citation-js/plugin-doi'
-import '@citation-js/plugin-bibtex' // 处理 bibtex
+import '@citation-js/plugin-bibtex'
 import '@citation-js/plugin-csl'
-import { type SlideCitation, useCitationStore } from './store.ts'
+import { type SlideCitation, useCitationStore } from './store'
 
 const { $page } = useSlideContext()
 const citationStore = useCitationStore()
@@ -82,7 +83,6 @@ watch(
     const entries = await Promise.all(
       items.map(async (item) => {
         const rendered = await formatDoi(item.doi, item.url)
-        console.log(rendered);
         return [item.number, rendered] as const
       })
     )
@@ -96,13 +96,15 @@ watch(
 </script>
 
 <template>
-    <div v-if="sortedCitations.length > 0" class="border-t border-gray-100 pt-1">
-        <div v-for="item in sortedCitations" :key="item.number"
-            class="reference-row text-[10px] leading-tight text-gray-700 mb-0.5">
-            <span class="font-mono">[{{ item.number }}]</span>
-            {{ renderedByNumber[item.number] || item.doi || item.url || " " }}
-        </div>
+  <div v-if="sortedCitations.length > 0" class="border-t border-gray-100 pt-1">
+    <div v-for="item in sortedCitations" :key="item.number"
+      class="flex flex-items-start gap-0 text-[7px] leading-[1.2] text-gray-700 mb-0">
+      <span class="font-mono inline-block w-[2.5em]">[{{ item.number }}]</span>
+      <span class="inline-block break-words flex-1" style="width: calc(100% - 2.5em)">
+        {{ renderedByNumber[item.number] || item.doi || item.url || " " }} {{ item.suffix || "" }}
+      </span>
     </div>
+  </div>
 </template>
 
 <style scoped>

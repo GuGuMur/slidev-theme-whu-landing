@@ -1,0 +1,11 @@
+{
+    "slidev.include": [
+        "**/slides.md",
+        "slides/main.md"
+    ],
+    "css.customData": [
+        ".vscode/unocss.json"
+    ],
+    "css.lint.unknownAtRules": "ignore",
+    "scss.lint.unknownAtRules": "ignore"
+}

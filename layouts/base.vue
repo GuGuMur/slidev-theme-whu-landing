@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useNav } from '@slidev/client'
-import References from '../plugins/references/References.vue'
+import Scroll from '../plugins/scroll/Scroll.vue'
 const { currentPage, total } = useNav()
 
 const UniSrc = new URL('../public/WHU.png', import.meta.url).href
@@ -11,8 +11,8 @@ const LabSrc = new URL('../public/LAB.png', import.meta.url).href
 </script>
 <template>
   <div class="h-full w-full flex flex-col bg-white relative overflow-hidden">
-
     <header class="h-14 w-full flex-none relative">
+      <Scroll />
       <slot name="header" />
       <div class="absolute top-1 right-1 flex justify-end items-start gap-0.5">
         <img :src="UniSrc" class="h-12 object-contain" />
@@ -28,7 +28,7 @@ const LabSrc = new URL('../public/LAB.png', import.meta.url).href
     </main>
 
     <footer class="flex-none w-full flex flex-col">
-      <div class="w-full px-2">
+      <div class="w-full px-1">
         <slot name="footer" />
       </div>
 

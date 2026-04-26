@@ -1,102 +1,45 @@
-:root {
-  /* default theme color */
-  /* can be overrided by uses `themeConfig` option */
-  --slidev-theme-primary: #5d8392;
+ul {
+  list-style: none !important;
+  @apply pl-1;
 }
 
-.slidev-layout.cover,
-.slidev-layout.intro {
-  @apply h-full grid;
-
-  h1 {
-    @apply text-6xl leading-20;
-  }
-
-  h1 + p {
-    @apply -mt-2 opacity-50 mb-4;
-  }
-
-  p + h2,
-  ul + h2,
-  table + h2 {
-    @apply mt-10;
-  }
+ul > li {
+  /* 使用 grid 或 flex 确保内容垂直居中，min-h 确保容器至少有图标那么大 */
+  @apply relative pl-5 flex items-start min-h-5; 
 }
 
-.slidev-layout.content {
-  @apply h-full;
+/* 蓝色圆圈底色 */
+ul > li::before {
+  content: "";
+  /* 关键修改：使用 top-0.5em 并配合 translate 确保相对于第一行文字对齐 */
+  @apply absolute left-0 w-4 h-4 bg-primary rounded-full;
+  top: 0.15em; 
 }
 
-.content-layout {
-  @apply h-full w-full flex flex-col overflow-hidden px-10 py-8;
+/* 白色对钩图标 */
+ul > li::after {
+  content: "";
+  @apply absolute left-0 w-4 h-4 i-material-symbols:check bg-white;
+  top: 0.15em;
 }
 
-.content-top {
-  @apply flex gap-6 mb-8;
+ol {
+  @apply list-none p-0 m-0; /* 清除默认样式 */
+  counter-reset: academic-counter; /* 重置计数器 */
 }
 
-.content-box {
-  @apply flex-1 rounded-[24px] border-2 border-solid p-5 shadow-sm;
+ol > li {
+  @apply relative pl-5;
+  counter-increment: academic-counter; /* 递增计数器 */
 }
 
-.content-box.left {
-  border-color: #3b99d4;
-  background: rgba(59, 153, 212, 0.12);
-  color: #0f3c66;
-}
-
-.content-box.right {
-  border-color: #d18b40;
-  background: rgba(209, 139, 64, 0.12);
-  color: #844b1c;
-}
-
-.box-title {
-  @apply text-xs uppercase tracking-[0.24em] font-semibold opacity-80 mb-3;
-}
-
-.box-body {
-  @apply text-base leading-7;
-}
-
-.content-grid {
-  @apply grid gap-6 flex-1;
-  grid-template-columns: minmax(0, 1.45fr) minmax(0, 0.95fr);
-}
-
-.content-column,
-.side-column {
-  @apply flex flex-col gap-6;
-}
-
-.content-card {
-  @apply rounded-[24px] border border-slate-200/70 bg-slate-50/90 p-5 shadow-sm;
-}
-
-.card-heading {
-  @apply text-xl font-semibold mb-3;
-}
-
-.references-box {
-  @apply rounded-[24px] border border-slate-200/70 bg-slate-950/95 p-5 shadow-lg text-white;
-}
-
-.reference-title {
-  @apply text-xs uppercase tracking-[0.24em] font-semibold opacity-80 mb-4;
-}
-
-.refs-list {
-  @apply flex flex-col gap-3;
-}
-
-.ref-item {
-  @apply flex gap-3 text-sm leading-6 text-slate-100;
-}
-
-.ref-index {
-  @apply w-6 text-right text-slate-400;
-}
-
-.ref-empty {
-  @apply text-sm opacity-70;
+ol > li::before {
+  /* 注入计数器内容 */
+  content: counter(academic-counter, decimal-leading-zero); 
+  
+  /* 样式控制：粗体、衬线字体、深色强调 */
+  @apply absolute left-0 top-0;
+  @apply font-mono text-whu-blue ;
+  
+  /* 这里的 decimal-leading-zero 会生成 01, 02 这种极具学术排版感的格式 */
 }

@@ -6,8 +6,8 @@ import { useNav } from '@slidev/client'
 const { tocTree: globalToc } = useNav()
 
 const props = withDefaults(defineProps<{
-    active: number | null
-    tocTree: Array<any> | null
+    active?: number | null
+    tocTree?: Array<any> | null
 }>(), {
     active: null,
     tocTree: null,
@@ -25,7 +25,7 @@ const tocData = computed(() => props.tocTree ?? globalToc.value)
 <template>
     <BaseLayout>
         <template #main>
-            <div class="h-full w-full flex items-center px-20">
+            <div class="h-full w-full flex items-center px-40 py-20 gap-16">
 
                 <div class="relative mr-20">
                     <div class="w-16 h-16 bg-[#2c5364] absolute -top-4 -left-4"></div>

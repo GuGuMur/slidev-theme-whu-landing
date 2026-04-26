@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref, useSlots, watch } from 'vue'
 import { useSlideContext } from '@slidev/client'
-import { useCitationStore } from './store.ts'
+import { useCitationStore } from './store'
 
 const props = defineProps<{
   doi: string
@@ -46,16 +46,17 @@ watch(
 </script>
 
 <template>
-  <span>
-    <slot />
-    <sup v-if="citationNumber > 0" class="my-cite-number">[{{ citationNumber }}]</sup>
+  <span class="inline-flex items-baseline">
+    <span class="border-b-1.5 border-whu-green pb-0.5 leading-none">
+      <slot />
+    </span>
+
+    <sup v-if="citationNumber > 0" class="text-current text-[0.72em] ml-[0.04em] ml-0.5 text-primary ">
+      [{{ citationNumber }}]
+    </sup>
   </span>
 </template>
 
 <style scoped>
-.my-cite-number {
-  color: currentColor;
-  font-size: 0.72em;
-  margin-left: 0.04em;
-}
+
 </style>
