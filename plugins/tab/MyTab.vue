@@ -1,40 +1,33 @@
 <script setup lang="ts">
-import { ref, provide, watch, computed, InjectionKey } from 'vue'
+import { ref, provide, computed } from 'vue'
 import { useSlideContext } from '@slidev/client'
 
-interface TabProps {
+const props = withDefaults(defineProps<{
     type?: 'line' | 'card'
     size?: 'small' | 'medium' | 'large'
-}
-
-const props = withDefaults(defineProps<TabProps>(), {
+}>(), {
     type: 'line',
     size: 'medium'
 })
 
-// 定义子节点数据结构
 export interface TabInfo {
     name: string
     tab: string
     click?: number
 }
 
-// 1. 获取 Slidev 上下文
 const { $slidev } = useSlideContext()
-const currentClick = computed(() => $slidev?.nav?.clicks || 0)
-
-// 2. 状态维护 (数据结构)
 const tabs = ref<TabInfo[]>([])
-const activeName = ref<string | number>('')
 
-// 3. 定义并提供注册接口
+const activeName = computed(() => {
+    const currentClick = $slidev?.nav?.clicks || 0
+    const currentTab = tabs.value.find(t => t.click === currentClick)
+    return currentTab ? currentTab.name : (tabs.value[0]?.name || '')
+})
+
 const registerTab = (tab: TabInfo) => {
     if (!tabs.value.find(t => t.name === tab.name)) {
         tabs.value.push(tab)
-        // 如果是第一个 Tab，或者其 click === 0，设为默认激活
-        if (tabs.value.length === 1 || tab.click === currentClick.value) {
-            activeName.value = tab.name
-        }
     }
 }
 
@@ -48,20 +41,15 @@ provide('SlidevTabsContext', {
     unregisterTab
 })
 
-// 4. 监听 Slidev 点击事件，自动切换 Tab
-watch(currentClick, (newClick) => {
-    const targetTab = tabs.value.find(t => t.click === newClick)
-    if (targetTab) {
-        activeName.value = targetTab.name
-    }
-}, { immediate: true })
+// === 核心修改逻辑 ===
+const handleTabClick = (tab: TabInfo) => {
+    if (tab.click !== undefined && tab.click !== $slidev.nav.clicks) {
 
-// 支持手动点击切换
-const handleTabClick = (name: string) => {
-    activeName.value = name
+            $slidev.nav.go($slidev.nav.currentPage, tab.click)
+            return
+    }
 }
 
-// 尺寸样式映射
 const sizeClass = computed(() => {
     switch (props.size) {
         case 'small': return 'text-sm py-1 px-3'
@@ -72,20 +60,20 @@ const sizeClass = computed(() => {
 </script>
 
 <template>
-    <div class="w-full flex flex-col my-tabs-container">
-        <div class="flex border-b border-gray-200 dark:border-gray-700 mb-4 relative">
-            <div v-for="tab in tabs" :key="tab.name" @click="handleTabClick(tab.name)"
-                class="cursor-pointer transition-all duration-300 relative -mb-[1px] whitespace-nowrap" :class="[
+    <div class="w-full h-full flex flex-col min-h-0">
+        <div class="flex border-b border-gray-200 dark:border-gray-700 mb-4 relative shrink-0">
+            <div v-for="tab in tabs" :key="tab.name" @click="handleTabClick(tab)"
+                class="cursor-pointer transition-colors duration-200 relative -mb-[1px] whitespace-nowrap" :class="[
                     sizeClass,
                     activeName === tab.name
                         ? 'text-[var(--slidev-theme-primary)] font-medium border-b-2 border-[var(--slidev-theme-primary)]'
-                        : 'text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700 dark:hover:text-gray-200'
+                        : 'text-gray-500 dark:text-gray-400 border-b-2 border-transparent hover:text-gray-700'
                 ]">
                 {{ tab.tab }}
             </div>
         </div>
 
-        <div class="relative flex-1">
+        <div class="relative flex-1 min-h-0">
             <slot />
         </div>
     </div>

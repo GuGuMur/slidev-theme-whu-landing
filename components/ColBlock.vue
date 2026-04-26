@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<{
             </span>
         </div>
 
-        <div :class="props.contentColor" class="px-4 py-2 flex flex-col justify-start text-sm">
+        <div :class="props.contentColor" class="px-4 py-1 flex flex-col justify-start text-sm">
             <slot />
         </div>
     </div>

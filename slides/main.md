@@ -86,18 +86,18 @@ clicks: 2
 <MyTab
   type="line"
   size="small"
-  class="paper-summary-tabs"
 >
-  <MyTabPane name="构建数据集" tab="构建数据集" :click="0" class="paper-summary-pane">
-      <img src="./assets/MedEinst/1.png" class="paper-summary-pane-image" />
+  <MyTabPane name="构建数据集" tab="构建数据集" :click="0">
+      123
+      <img src="./assets/MedEinst/1.png"/>
   </MyTabPane>
   
-  <MyTabPane name="智能体" tab="智能体" :click="1" class="paper-summary-pane">
-      <img src="./assets/MedEinst/2.png" class="paper-summary-pane-image" />
+  <MyTabPane name="智能体" tab="智能体" :click="1">
+      <img src="./assets/MedEinst/2.png"/>
   </MyTabPane>
   
-  <MyTabPane name="实验结果" tab="实验结果" :click="2" class="paper-summary-pane">
-      <img src="./assets/MedEinst/3.png" class="paper-summary-pane-image" />
+  <MyTabPane name="实验结果" tab="实验结果" :click="2">
+      <img src="./assets/MedEinst/3.png"/>
   </MyTabPane>
 </MyTab>
 
