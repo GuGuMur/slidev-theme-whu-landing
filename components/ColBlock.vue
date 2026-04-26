@@ -2,8 +2,8 @@
 import type { VNodeChild } from 'vue'
 const props = withDefaults(defineProps<{
     title?: string | VNodeChild
-    titleTextColor?: string // 默认为 UnoCSS 变量或类名
-    titleBGColor?: string // 默认为 UnoCSS 变量或类名
+    titleTextColor?: string
+    titleBGColor?: string
     contentColor?: string
 }>(), {
     titleBGColor: 'bg-primary',
@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<{
 
 <template>
     <div class="flex flex-col min-h-0 rounded-lg shadow-md overflow-hidden border border-gray-200/50">
-        <div :class="props.titleBGColor" class="px-4 pb-1 text-white font-bold text-lg flex-center gap-2 shrink-0">
+        <div :class="props.titleBGColor" class="px-4 pb-0.3 text-white font-bold text-lg flex-center gap-2 shrink-0">
             <slot name="title-prefix" />
             <span :class="props.titleTextColor">
                 <slot name="title">{{ props.title }}</slot>

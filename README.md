@@ -19,13 +19,26 @@ Learn more about [how to use a theme](https://sli.dev/guide/theme-addon#use-them
 
 This theme provides the following layouts:
 
-> TODO:
+* Content-Flex
+* Content-Grid
+* Cover
+* My-Image
+* Paper-Summary
+* Toc
 
 ## Components
 
-This theme provides the following components:
+* Block
+* Chevron
+* ColBlock
+* Hint
+* Mark
 
-> TODO:
+## Plugins
+
+* Reference
+* Scroll Support
+* Tabs
 
 ## Contributing
 

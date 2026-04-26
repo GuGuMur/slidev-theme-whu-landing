@@ -41,7 +41,6 @@ provide('SlidevTabsContext', {
     unregisterTab
 })
 
-// === 核心修改逻辑 ===
 const handleTabClick = (tab: TabInfo) => {
     if (tab.click !== undefined && tab.click !== $slidev.nav.clicks) {
 

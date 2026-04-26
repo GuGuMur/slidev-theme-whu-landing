@@ -1,7 +1,5 @@
 ---
 theme: ../
-addons:
-  # - naive
 aspectRatio: 16/9
 ---
 
@@ -83,10 +81,7 @@ clicks: 2
 
 ::details::
 
-<MyTab
-  type="line"
-  size="small"
->
+<MyTab type="line" size="small">
   <MyTabPane name="构建数据集" tab="构建数据集" :click="0">
       123
       <img src="./assets/MedEinst/1.png"/>
@@ -94,6 +89,25 @@ clicks: 2
   
   <MyTabPane name="智能体" tab="智能体" :click="1">
       <img src="./assets/MedEinst/2.png"/>
+<div class="flex gap-1">
+
+<Chevron title="术前分期" icon="carbon:analytics">
+
+* 肿瘤分期评估
+* 可切除性评估
+* 多学科会诊
+
+</Chevron>
+
+<Chevron title="术中风险" icon="i-carbon-warning">
+
+* 患者情况分析
+* 手术风险评估
+* 胰腺风险预测
+
+</Chevron>
+
+</div>
   </MyTabPane>
   
   <MyTabPane name="实验结果" tab="实验结果" :click="2">
