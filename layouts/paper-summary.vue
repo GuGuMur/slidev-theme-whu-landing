@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { computed } from 'vue'
 import BaseLayout from './base.vue'
 import ColBlock from '../components/ColBlock.vue';
 import MyCite from '../plugins/references/MyCite.vue';
@@ -8,6 +9,20 @@ const props = defineProps({
     section: { type: String, default: '' },
     paperABBR: { type: String, default: '' },
     paperDOI: { type: String, default: '' },
+})
+
+const splitItems = (text: string) => text.split('/').map((item) => item.trim()).filter((item) => item.length > 0)
+
+const groupedLabels = computed(() => splitItems(props.paperABBR))
+const groupedDois = computed(() => splitItems(props.paperDOI))
+const groupedCitations = computed(() => {
+    if (groupedLabels.value.length > 1 && groupedLabels.value.length === groupedDois.value.length) {
+        return groupedLabels.value.map((label, index) => ({
+            label,
+            doi: groupedDois.value[index],
+        }))
+    }
+    return []
 })
 
 
@@ -37,9 +52,17 @@ const props = defineProps({
                     <div class="col-span-4 h-full flex flex-col min-h-0">
                         <ColBlock class="h-full">
                             <template #title>
-                                <MyCite :doi="props.paperDOI" :label="paperABBR">
-                                    {{ paperABBR }}
-                                </MyCite>
+                                <template v-if="groupedCitations.length">
+                                    <span class="inline-flex items-baseline gap-1">
+                                        <template v-for="(item, index) in groupedCitations" :key="item.doi">
+                                            <MyCite :doi="item.doi">{{ item.label }}</MyCite>
+                                            <span v-if="index < groupedCitations.length - 1">/</span>
+                                        </template>
+                                    </span>
+                                </template>
+                                <template v-else>
+                                    <MyCite :doi="props.paperDOI">{{ paperABBR }}</MyCite>
+                                </template>
                             </template>
                             <div class="h-full">
                                 <slot name="summary" />
