@@ -4,19 +4,13 @@ on:
     branches:
       - main
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write 
-      contents: write
-      
-    steps:
-      - uses: actions/checkout@v4
 
-      # - uses: pnpm/action-setup@v4
-      #   with:
-      #     version: 10
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
@@ -31,8 +25,8 @@ jobs:
         run: npm ci
 
       - name: Publish to npm
-        # run: NODE_AUTH_TOKEN="" npm publish --no-git-checks --provenance --access public
         run: npm publish --access public
+        # Note: Do NOT set NODE_AUTH_TOKEN!
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
