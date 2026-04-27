@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/GuGuMur/slidev-theme-whu-landing.git"
+    "url": "https://github.com/GuGuMur/slidev-theme-whu-landing"
   },
   "scripts": {
     "build": "slidev build slides/main.md",
