@@ -9,6 +9,10 @@
   "engines": {
     "node": ">=20.12.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/GuGuMur/slidev-theme-whu-landing.git"
+  },
   "scripts": {
     "build": "slidev build slides/main.md",
     "dev": "slidev slides/main.md --open",
