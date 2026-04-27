@@ -24,7 +24,8 @@ jobs:
           node-version: '22'
           registry-url: 'https://registry.npmjs.org'
 
-      - run: pnpm add -g npm@latest
+      - name: Update npm to latest
+        run: npm install -g npm@latest
 
       - name: Install dependencies
         run: npm ci
