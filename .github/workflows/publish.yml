@@ -29,7 +29,9 @@ jobs:
         run: npm install
 
       - name: Publish to npm
-        run: npm publish --access public --provenance
+        run: |
+          npm config set //registry.npmjs.org/:_authToken=""
+          npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ""
 
