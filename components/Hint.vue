@@ -3,7 +3,7 @@ import { computed, useAttrs } from 'vue'
 
 interface Props {
     title?: string
-    icon?: string // 接收 UnoCSS 图标类名，如 i-carbon-light
+    icon?: string
     align?: 'left' | 'center' | 'right'
     size?: 'sm' | 'md' | 'lg'
 }
