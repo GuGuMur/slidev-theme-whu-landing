@@ -13,8 +13,7 @@
     "build": "slidev build slides/main.md",
     "dev": "slidev slides/main.md --open",
     "export": "slidev export slides/main.md",
-    "screenshot": "slidev export slides/main.md --format png",
-    "release": "changeset publish"
+    "screenshot": "slidev export slides/main.md --format png"
   },
   "pnpm": {
     "overrides": {
