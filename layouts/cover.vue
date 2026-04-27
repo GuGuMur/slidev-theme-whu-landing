@@ -11,7 +11,7 @@ import BaseLayout from './base.vue'
 
         <div class="w-full h-[300px] bg-primary flex items-center justify-center">
           <div class="text-center px-12">
-            <h1 class="text-white text-5xl font-bold tracking-widest leading-tight">
+            <h1 class="text-white text-4xl font-bold tracking-widest leading-tight">
               <slot />
             </h1>
             <div class="mt-4 text-white text-2xl opacity-90 font-light">

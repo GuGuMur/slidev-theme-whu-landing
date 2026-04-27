@@ -1,6 +1,6 @@
 {
   "name": "slidev-theme-whu-landing",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "type": "module",
   "keywords": [
     "slidev-theme",
@@ -13,7 +13,8 @@
     "build": "slidev build slides/main.md",
     "dev": "slidev slides/main.md --open",
     "export": "slidev export slides/main.md",
-    "screenshot": "slidev export slides/main.md --format png"
+    "screenshot": "slidev export slides/main.md --format png",
+    "release": "changeset publish"
   },
   "pnpm": {
     "overrides": {
@@ -35,9 +36,11 @@
     "slidev-addon-typst": "^1.0.2",
     "slidev-component-progress": "^1.1.0",
     "slidev-component-scroll": "^1.1.0",
+    "unocss-preset-palette": "^0.4.0",
     "vue-router": "^5.0.6"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.31.0",
     "@iconify-json/material-symbols": "^1.2.69",
     "@iconify/vue": "^5.0.0",
     "@slidev/cli": "latest",
@@ -57,5 +60,9 @@
     "addons": [
       "naive"
     ]
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
   }
 }

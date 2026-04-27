@@ -1,12 +1,20 @@
 import { defineConfig, presetIcons, presetWind3 } from "unocss";
-// import { presetShades } from "@viarotel-org/unocss-preset-shades";
+import { presetPalette } from "unocss-preset-palette";
+
+const whuColors = {
+  blue: "#3b99d4",
+  deepblue: "#002554",
+  green: "#115740",
+  pink: "#f8a3bc",
+  sky: "#41b6e6",
+  yellow: "#ffa300",
+  purple: "#33058d",
+  cyan: "#00797c",
+  red: "#e10800",
+  grey: "#c1c6c8",
+};
 
 export default defineConfig({
-  // presets: [
-  //     presetShades({
-  //         primary: "#3b99d4",
-  //     }),
-  // ],
   presets: [
     presetWind3(),
     presetIcons({
@@ -17,10 +25,18 @@ export default defineConfig({
         "vertical-align": "middle",
       },
     }),
+    presetPalette({
+      colors: {
+        primary: whuColors.blue,
+        secondary: whuColors.green,
+        ...Object.fromEntries(
+          Object.entries(whuColors).map(([k, v]) => [`whu-${k}`, v]),
+        ),
+      },
+    }),
   ],
   shortcuts: [
     {
-      // 自定义默认背景
       "bg-primary": "bg-[#3b99d4]",
       "page-number":
         "italic font-bold text-base font-[Times_New_Roman,serif] [font-variant-numeric:lining-nums] tracking-wide",
@@ -34,23 +50,9 @@ export default defineConfig({
   ],
   theme: {
     colors: {
-      // 核心校色
-      primary: "#3b99d4", // 珞珈蓝
-      secondary: "#115740", // 珞珈绿
-
-      // 扩展学术色谱
-      whu: {
-        blue: "#002554", // 珞珈蓝
-        green: "#115740", // 珞珈绿
-        pink: "#f8a3bc", // 珞樱粉
-        sky: "#41b6e6", // 东湖蓝
-        yellow: "#ffa300", // 秋桂黄
-        purple: "#33058d", // 春藤紫
-        cyan: "#00797c", // 甍瓦绿
-        red: "#e10800", // 霜叶红
-        grey: "#c1c6c8", // 晨雾灰
-      },
+      primary: "#3b99d4",
+      secondary: "#115740",
+      whu: whuColors,
     },
   },
-  // ...
 });

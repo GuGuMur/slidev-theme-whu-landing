@@ -33,6 +33,7 @@ This theme provides the following layouts:
 * ColBlock
 * Hint
 * Mark
+* Text
 
 ## Plugins
 

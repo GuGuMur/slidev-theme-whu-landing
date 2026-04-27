@@ -56,6 +56,12 @@ const props = defineProps({
                 </div>
             </div>
         </template>
-
+        <template #footer>
+            <div class="flex flex-col w-full">
+                <div class="px-2 py-1">
+                    <References />
+                </div>
+            </div>
+        </template>
     </BaseLayout>
 </template>
