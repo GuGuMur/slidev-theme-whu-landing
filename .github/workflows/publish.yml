@@ -35,9 +35,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ""
 
+      - name: Get version from package.json
+        id: package_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         if: success()
         with:
-          tag_name: v${{ github.sha }}
+          tag_name: v${{ steps.package_version.outputs.VERSION }}
+          name: Release v${{ steps.package_version.outputs.VERSION }}
           generate_release_notes: true
