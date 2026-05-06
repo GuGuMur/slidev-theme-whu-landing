@@ -13,29 +13,29 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
     <!-- 有icon的布局：左侧icon，右侧标题和内容竖排 -->
-    <div v-if="props.icon" class="inline-flex flex-row items-start gap-1 p-2 rounded-xl border border-blue-200/50 bg-gradient-to-br from-blue-50/70 via-white/50 to-white shadow-sm backdrop-blur-sm">
-        <div class="text-2xl text-whu-blue shrink-0 opacity-80">
+    <div v-if="props.icon" class="inline-flex flex-row items-start gap-1 p-3 rounded-2xl border border-whu-blue/25 bg-gradient-to-br from-whu-blue/10 via-white/70 to-whu-sky/5 shadow-sm backdrop-blur-sm">
+        <div class="text-2xl text-whu-blue shrink-0 opacity-90">
             <div :class="props.icon" />
         </div>
 
         <div class="flex flex-col">
-            <div v-if="props.title" class="text-lg font-bold text-whu-blue">
+            <div v-if="props.title" class="text-md font-bold text-whu-deepblue">
                 {{ props.title }}
             </div>
 
-            <div v-if="props.content" class="text-sm text-whu-blue/80">
+            <div v-if="props.content" class="text-sm text-whu-blue/90">
                 {{ props.content }}
             </div>
         </div>
     </div>
 
     <!-- 无icon的布局：标题和内容竖排 -->
-    <div v-else class="inline-flex flex-col gap-1 p-2 rounded-xl border border-blue-200/50 bg-gradient-to-br from-blue-50/70 via-white/50 to-white shadow-sm backdrop-blur-sm">
-        <div v-if="props.title" class="text-lg font-bold text-whu-blue">
+    <div v-else class="inline-flex flex-col gap-2 p-3 rounded-2xl border border-whu-blue/25 bg-gradient-to-br from-whu-blue/10 via-white/70 to-whu-sky/5 shadow-sm backdrop-blur-sm">
+        <div v-if="props.title" class="text-md font-bold text-whu-deepblue">
             {{ props.title }}
         </div>
 
-        <div v-if="props.content" class="text-sm text-whu-blue/80">
+        <div v-if="props.content" class="text-sm text-whu-blue/90">
             {{ props.content }}
         </div>
     </div>
