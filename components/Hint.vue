@@ -51,21 +51,27 @@ const fillHeight = computed(() => /(^|\s)h-full(\s|$)/.test(mergedClass.value))
 
 <template>
     <div class="flex mb-2" :class="containerAlignMap[props.align]">
-        <div
-            class="flex items-center gap-2 bg-gray-100/50 px-3 py-1.5 rounded-xl border border-whu-sky shadow-md backdrop-blur-sm"
-            :class="[contentAlignMap[props.align], fillWidth ? 'w-full' : 'inline-flex', fillHeight ? 'h-full' : '']">
+        <div class="flex gap-2 bg-gray-100/50 px-3 py-2 rounded-xl border border-whu-sky shadow-md backdrop-blur-sm"
+            :class="[contentAlignMap[props.align], fillWidth ? 'w-full' : 'inline-flex', fillHeight ? 'h-full' : '', 'items-center']">
+
+            <!-- 图标部分 -->
             <div v-if="props.icon" :class="props.icon" class="text-primary shrink-0" />
 
-            <div class="flex items-center gap-2 leading-4" :class="sizeMap[props.size]">
-                <span v-if="props.title" class="font-bold text-primary whitespace-nowrap">
-                    {{ props.title }}
-                </span>
+            <!-- 主体内容部分：改为水平 Flex 布局 -->
+            <div class="flex items-center gap-2 flex-1 min-w-0" :class="sizeMap[props.size]">
+                <!-- 标题和分割线 -->
+                <div v-if="props.title" class="flex items-center gap-2 shrink-0">
+                    <span class="font-bold text-primary whitespace-nowrap">
+                        {{ props.title }}
+                    </span>
+                    <!-- 灰线分割 -->
+                    <span class="w-[1px] h-4 bg-gray-300" />
+                </div>
 
-                <span v-if="props.title" class="w-1px h-3 bg-gray-300" />
-
-                <span class="leading-4">
+                <!-- 右侧文本插槽 -->
+                <div class="leading-5 text-gray-700 flex-1">
                     <slot />
-                </span>
+                </div>
             </div>
         </div>
     </div>
